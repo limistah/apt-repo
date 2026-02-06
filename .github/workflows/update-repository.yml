@@ -1,0 +1,124 @@
+name: Update APT Repository
+
+on:
+  repository_dispatch:
+    types: [heimdal-release]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to update to (e.g., 1.0.1)'
+        required: true
+      tag:
+        description: 'Git tag (e.g., v1.0.1)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  update-repository:
+    name: Update Repository
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set version variables
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+            TAG="${{ github.event.inputs.tag }}"
+          else
+            VERSION="${{ github.event.client_payload.version }}"
+            TAG="${{ github.event.client_payload.tag }}"
+          fi
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+          echo "TAG=${TAG}" >> $GITHUB_ENV
+          echo "Updating to version: ${VERSION} (${TAG})"
+      
+      - name: Download DEB package
+        run: |
+          wget "https://github.com/limistah/heimdal/releases/download/${TAG}/heimdal_${VERSION}_amd64.deb"
+      
+      - name: Install dpkg-dev for package scanning
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y dpkg-dev
+      
+      - name: Add package to pool
+        run: |
+          mkdir -p pool/main/h/heimdal
+          cp "heimdal_${VERSION}_amd64.deb" pool/main/h/heimdal/
+          echo "Package added to pool"
+          ls -lh pool/main/h/heimdal/
+      
+      - name: Generate Packages index
+        run: |
+          cd dists/stable/main/binary-amd64
+          dpkg-scanpackages --arch amd64 ../../../../pool/main > Packages
+          gzip -k -f Packages
+          cd -
+          echo "Packages index generated"
+      
+      - name: Generate Release file
+        run: |
+          cd dists/stable
+          cat > Release <<EOF
+          Origin: limistah
+          Label: limistah
+          Suite: stable
+          Codename: stable
+          Architectures: amd64
+          Components: main
+          Description: APT repository for packages by limistah
+          Date: $(date -R)
+          EOF
+          
+          # Add MD5Sum
+          echo "MD5Sum:" >> Release
+          find main -type f | while read file; do
+            echo " $(md5sum "$file" | awk '{print $1}') $(stat -c%s "$file") ./$file" >> Release
+          done
+          
+          # Add SHA1
+          echo "SHA1:" >> Release
+          find main -type f | while read file; do
+            echo " $(sha1sum "$file" | awk '{print $1}') $(stat -c%s "$file") ./$file" >> Release
+          done
+          
+          # Add SHA256
+          echo "SHA256:" >> Release
+          find main -type f | while read file; do
+            echo " $(sha256sum "$file" | awk '{print $1}') $(stat -c%s "$file") ./$file" >> Release
+          done
+          
+          cd -
+          echo "Release file generated"
+      
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add pool/main/h/heimdal/
+          git add dists/stable/
+          git commit -m "chore: update heimdal to ${VERSION}
+
+          - Added heimdal_${VERSION}_amd64.deb to repository
+          - Regenerated Packages index
+          - Updated Release file with new checksums
+          - Automated update via GitHub Actions"
+          git push origin main
+      
+      - name: Create summary
+        run: |
+          echo "## APT Repository Updated Successfully! 🎉" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Version:** ${VERSION}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Tag:** ${TAG}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Package:** heimdal_${VERSION}_amd64.deb" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Users can now install with:" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
+          echo "sudo apt update && sudo apt upgrade heimdal" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
