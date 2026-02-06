@@ -1,0 +1,17 @@
+Origin: Heimdal APT Repository
+Label: Heimdal
+Suite: stable
+Codename: stable
+Architectures: amd64
+Components: main
+Description: APT repository for Heimdal dotfile manager
+Date: Fri, 06 Feb 2026 09:52:48 +0100
+MD5Sum:
+  f89de9dc8d867e4fd0a8f18df95af7cf ./main/binary-amd64/Packages.gz
+  7b9e65956f36d51a3c691025e2032db4 ./main/binary-amd64/Packages
+SHA1:
+  ea5c95c8db812450b735f552bc2c3222d4083bb6 ./main/binary-amd64/Packages.gz
+  e368f43c5360f0e0eb7b2c300e0c77e32607ed4d ./main/binary-amd64/Packages
+SHA256:
+  97bbf2d5a68aa031dc463fbd85bd83ec48826c7cfa7c30d34802bdf2bbd554da ./main/binary-amd64/Packages.gz
+  b9e0fc7238f680a8eca5750f75be65b298d2acc82499cdee10caea35142a0a74 ./main/binary-amd64/Packages
