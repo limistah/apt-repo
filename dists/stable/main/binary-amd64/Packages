@@ -2,11 +2,11 @@ Package: heimdal
 Version: 1.0.0
 Architecture: amd64
 Maintainer: Aleem Isiaka <limistah@github.com>
-Filename: pool/main/h/heimdal/heimdal_1.0.0_amd64.deb
-Size: 1027528
-MD5sum: 24ece247026afb2627aeab188c26c05a
-SHA1: aabd06fc9379a65d2252f13175c34e7141c48a07
-SHA256: 9d8569a50e98b576eb968a6c8de9b9105c50c2efe023b0468ab92978545f4bee
+Filename: ../../../../pool/main/h/heimdal/heimdal_1.0.0_amd64.deb
+Size: 1027248
+MD5sum: 1166b11b5625e1722da7acbecc7d0e08
+SHA1: 8661d353a8f32c58e817e56ccdbc00beaac51a21
+SHA256: ec4f46b2d9d57432971a637839e6facf098466c866688cacd732353401b59ff8
 Section: utils
 Priority: optional
 Homepage: https://github.com/limistah/heimdal

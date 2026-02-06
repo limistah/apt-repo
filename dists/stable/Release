@@ -5,13 +5,13 @@ Codename: stable
 Architectures: amd64
 Components: main
 Description: APT repository for packages by limistah
-Date: Fri, 06 Feb 2026 09:52:48 +0100
+Date: Fri, 06 Feb 2026 09:20:56 +0000
 MD5Sum:
-  f89de9dc8d867e4fd0a8f18df95af7cf ./main/binary-amd64/Packages.gz
-  7b9e65956f36d51a3c691025e2032db4 ./main/binary-amd64/Packages
+ dd78ce7882a582eeb6b9ac421c0fcddc 665 ./main/binary-amd64/Packages
+ 0325ae706aa3ca54ea9e9ed9f5d1b9bd 472 ./main/binary-amd64/Packages.gz
 SHA1:
-  ea5c95c8db812450b735f552bc2c3222d4083bb6 ./main/binary-amd64/Packages.gz
-  e368f43c5360f0e0eb7b2c300e0c77e32607ed4d ./main/binary-amd64/Packages
+ 8e2e52a64c9ddbe21f98a26a8bb25b356697f7f3 665 ./main/binary-amd64/Packages
+ 26e2627e18d39cda63ac1d2eb983c35ce3053e04 472 ./main/binary-amd64/Packages.gz
 SHA256:
-  97bbf2d5a68aa031dc463fbd85bd83ec48826c7cfa7c30d34802bdf2bbd554da ./main/binary-amd64/Packages.gz
-  b9e0fc7238f680a8eca5750f75be65b298d2acc82499cdee10caea35142a0a74 ./main/binary-amd64/Packages
+ 3ba6126da851c9cc291a50be6a6fe9964710135f6b6a90a6fb40c00db6cf3b54 665 ./main/binary-amd64/Packages
+ cad9a4e1596461c9c37124fde0161ccdd3d31926d7caf5e5fd1ba9b46f4526e3 472 ./main/binary-amd64/Packages.gz
