@@ -1,10 +1,10 @@
-Origin: Heimdal APT Repository
-Label: Heimdal
+Origin: limistah
+Label: limistah
 Suite: stable
 Codename: stable
 Architectures: amd64
 Components: main
-Description: APT repository for Heimdal dotfile manager
+Description: APT repository for packages by limistah
 Date: Fri, 06 Feb 2026 09:52:48 +0100
 MD5Sum:
   f89de9dc8d867e4fd0a8f18df95af7cf ./main/binary-amd64/Packages.gz
